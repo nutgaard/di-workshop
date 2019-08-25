@@ -1,9 +1,9 @@
 package no.utgdev.diy.ex2;
 
+import no.utgdev.diy.BeanDefinition;
 import no.utgdev.diy.DIYStatic;
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.Set;
 
@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class Ex2Test {
     @Test
     void instansiate() {
-        Set<Method> methods = DIYStatic.scan(Ex2Config.class);
+        Set<BeanDefinition> methods = DIYStatic.scan(Ex2Config.class);
 
         Map<String, Object> objects = DIYStatic.instansiate(methods);
 

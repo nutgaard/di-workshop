@@ -10,7 +10,7 @@ import java.util.Set;
 public class DIY {
     private static DIY instance;
     private boolean instansiated = false;
-    private Set<Method> beans = new HashSet<>();
+    private Set<BeanDefinition> beans = new HashSet<>();
     private Map<String, Object> objects;
 
     public static DIY getInstance() {

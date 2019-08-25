@@ -1,5 +1,6 @@
 package no.utgdev.diy.ex1;
 
+import no.utgdev.diy.BeanDefinition;
 import no.utgdev.diy.DIYStatic;
 import org.junit.jupiter.api.Test;
 
@@ -27,10 +28,10 @@ class Ex1Test {
         assertThat(methods).containsExactlyInAnyOrder("number", "string", "list", "map");
     }
 
-    private static List<String> methodNames(Set<Method> methods) {
+    private static List<String> methodNames(Set<BeanDefinition> methods) {
         return methods
                 .stream()
-                .map(Method::getName)
+                .map(BeanDefinition::getName)
                 .collect(toList());
     }
 }
