@@ -1,19 +1,19 @@
 package no.utgdev.diy.ex2;
 
-//REMOVE import no.utgdev.diy.annotations.Bean;
-//REMOVE import no.utgdev.diy.annotations.Import;
+import no.utgdev.diy.annotations.Bean;
+import no.utgdev.diy.annotations.Import;
 
 import java.util.Collections;
 import java.util.List;
 
-//REMOVE @Import(Ex2Config2.class)
+@Import(Ex2Config2.class)
 public class Ex2Config {
-    //REMOVE @Bean
+    @Bean
     public List<String> list() {
         return Collections.emptyList();
     }
 
-    //REMOVE @Bean
+    @Bean
     public String string() {
         return "";
     }

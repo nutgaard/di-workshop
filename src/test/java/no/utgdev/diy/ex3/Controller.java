@@ -1,9 +1,9 @@
 package no.utgdev.diy.ex3;
 
-//REMOVE import no.utgdev.diy.annotations.Inject;
+import no.utgdev.diy.annotations.Inject;
 
 public class Controller {
-    //REMOVE @Inject
+    @Inject
     private Service service;
 
     public String helloWorld() {
