@@ -95,6 +95,16 @@ public class DIYStatic {
                             field.set(obj, wantedValue);
                         }))
                 );
+
+        namedObjects
+                .values()
+                .forEach((obj) -> {
+                    ReflectionUtils.getMethods(obj.getClass(), withAnnotation(PostConstruct.class))
+                            .forEach(sneakyThrow((method) -> {
+                                method.setAccessible(true);
+                                method.invoke(obj);
+                            }));
+                });
     }
 
     private static Object getObject(Map<String, Object> namedObjects, Field field) {

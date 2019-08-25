@@ -1,12 +1,12 @@
 package no.utgdev.diy.ex7;
 
-//REMOVE import no.utgdev.diy.annotations.Component;
-//REMOVE import no.utgdev.diy.annotations.Inject;
-//REMOVE import no.utgdev.diy.annotations.PostConstruct;
+import no.utgdev.diy.annotations.Component;
+import no.utgdev.diy.annotations.Inject;
+import no.utgdev.diy.annotations.PostConstruct;
 
-//REMOVE @Component
+@Component
 public class MinComponent {
-    //REMOVE @Inject
+    @Inject
     private MinService service;
 
     private String serviceHei;
@@ -15,7 +15,7 @@ public class MinComponent {
         return "Hei fra MinComponent og " + serviceHei;
     }
 
-    //REMOVE @PostConstruct
+    @PostConstruct
     private void setup() {
         this.serviceHei = service.hei().toUpperCase();
     }
