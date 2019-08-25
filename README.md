@@ -26,7 +26,9 @@ Men selv her her er det flere muligheter, e.g classpath-scanning eller vha konfi
 For å undersøke classpath-scanning kommer vi til å ta ibruk ett veldig fint lite java-bibliotek: [reflections](https://github.com/ronmamo/reflections),
 men det først vi må gjøre er å lage noen java-annotasjoner som vi kan lete etter etterpå.
 
-##### Oppgave 1.1 Opprett `Bean` annotasjonen i `src/.../annotations/`, f.eks
+**NB** Kjør `node setup.js ex1` for å gjøre klar testene
+
+##### Oppgave 1.1 Opprett `Bean`, `@Inject` og `@Import` annotasjonen i `src/.../annotations/`, f.eks
 ```java
 @Retention(value = RUNTIME)
 @Target(value = {ElementType.METHOD})
@@ -39,6 +41,8 @@ public @interface Bean {
 
 I eksemplet ovenfor bruker vi `@Retention(value = RUNTIME)` slik at informasjonen om `Bean` er tilgjengelig runtime.
 Og vi bruker `@Target(value = {ElementType.METHOD})` for å indikere at det kun er lov å bruke annotasjonen på java-metoder.
+
+`@Bean` brukes for å markere bønner, mens `@Import` brukes for å lage konfigurasjons-filer. Se eksempel i oppgave 1.2.2
 
 ##### Oppgave 1.2.1 Implementer `DIYStatic.scan(String classpath)` slik at i `Ex1Test.finnAlleBeans` kjører.
 [reflections](https://github.com/ronmamo/reflections) biblioteket er bygd opp rundt konseptet "scanner". 
@@ -80,24 +84,34 @@ class DAOConfig {
 
 ##### Oppgave 1.3 Implementere `DIYStatic.instansiate(Set<Method> methods)` slik at `Ex2Test.instansiate` kjører
 
+**NB** Kjør `node setup.js ex2` for å gjøre klar testene
+
 
 ##### Oppgave 1.4 Implementere `DIYStatic.wireup(Map<String, Object> namedObjects)`
 Ingen test for denne. :O Men man kan alltid bruke debuggeren til å titte litt på objektene man får tilbake etter `DIYStatic.wireup`.
 
 ##### Oppgave 1.5 Implementere `DIYStatic.getBean(Map<String, Object> objects, String name)` slik at `Ex3Test.wireup` kjører
 
+**NB** Kjør `node setup.js ex3` for å gjøre klar testene
+
 
 ### Del 2: Pakk det sammen
+
+**NB** Kjør `node setup.js ex4` for å gjøre klar testene
  
 ##### Oppgave 2.1 Implementer `DIY.load(String classPath)`
 ##### Oppgave 2.2 Implementer `DIY.load(Class root)`
 ##### Oppgave 2.3 Implementer `DIY.getBean(String name)`
+##### Oppgave 2.4 Implementer `DIY.reset()`
+
 
 Etter **Oppgave 2.3** burde `Ex4Test.run` kjøre. ;) 
 
 ### Del 3: Features
 
-##### Oppgave 3.1 Opprett `@Named`, og respekter bønner med denne annotasjonen
+##### Oppgave 3.1 Opprett `@Named`, og respekter bønner med denne annotasjonen (Ex5Test)
+
+**NB** Kjør `node setup.js ex5` for å gjøre klar testene
 
 Noen ganger kan det være greit å ha greit å ha flere bønner av samme, men man trenger da en måte å skille de på.
 Dette håndteres via å gi alle bønner ett navn ([BeanNameGenerator](https://docs.spring.io/spring-framework/docs/5.1.9.RELEASE/javadoc-api/org/springframework/beans/factory/support/BeanNameGenerator.html)),
@@ -121,6 +135,8 @@ La oss se om vi kan få `Ex5Test.run` til å kjøre.
 
 ##### Oppgave 3.2 Opprett `@Component` og `@Service` annotasjonen i `src/.../annotations/`
 
+**NB** Kjør `node setup.js ex6` for å gjøre klar testene
+
 Spring kommer med ett sett av [stereotype-annotasjoner](https://docs.spring.io/spring-framework/docs/current/spring-framework-reference/core.html#beans-stereotype-annotations),
 disse kan brukes for å annotere klasser slik at de blir automatisk plukket opp ved classpath-scanning, 
 uten behovet for å skrive egne `@Bean`-metoder.
@@ -130,6 +146,8 @@ Alle steretype-annotasjonene er en spesialisering av `@Component`, men man ønsk
 Fiks `DIY.load(String classPath)` slik at den også laster inn klasser med steretype-annotasjoner, og etter det burde `Ex6Test.run` kunne fungere.
 
 ##### Oppgave 3.3 Opprett `@PostConstruct` i `src/.../annotations/`
+
+**NB** Kjør `node setup.js ex7` for å gjøre klar testene
 
 Siden vi bare har implementer field-injection så vil ikke bønnene være klare når en evt konstruktør kjører.
 Men i blandt vil vi fortsatt gjøre ting når en klasse blir instansiert.

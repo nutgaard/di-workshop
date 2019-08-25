@@ -269,12 +269,16 @@
     * Oppgave 2.1: `DIY.load(String classPath)`
     * Oppgave 2.2: `DIY.load(Class root)`
     * Oppgave 2.3: `DIY.getBean(String name)`
+    * Oppgave 2.4: `DIY.reset()`
 
 
     ???
 
     Man kan sannsynligvis gjenbruke mye fra `DIYStatic`,
     om man kopierer kode eller bare bruker metodene der som utilities har ikke noe å si.
+
+    Det ligger også litt scaffolding for å bygge opp en Singleton her, fordi det er jo nice.
+    Og noe vi kommer til å bruke for å unngå at testene går i beina på hverandre, tilsvarende Spring's `@DirtyContext`
 
     ---
 
