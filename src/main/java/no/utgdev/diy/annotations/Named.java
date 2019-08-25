@@ -8,7 +8,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 // TODO Oppgave 1.1
 @Retention(value = RUNTIME)
-@Target(value = {ElementType.METHOD})
-public @interface Bean {
-    String name() default "";
+@Target(value = {ElementType.FIELD})
+public @interface Named {
+    String value() default "";
 }

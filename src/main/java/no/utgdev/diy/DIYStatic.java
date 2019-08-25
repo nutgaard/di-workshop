@@ -3,6 +3,7 @@ package no.utgdev.diy;
 import no.utgdev.diy.annotations.Bean;
 import no.utgdev.diy.annotations.Import;
 import no.utgdev.diy.annotations.Inject;
+import no.utgdev.diy.annotations.Named;
 import no.utgdev.diy.utils.Pair;
 import org.reflections.ReflectionUtils;
 import org.reflections.Reflections;
@@ -67,6 +68,10 @@ public class DIYStatic {
     private static Pair<String, Object> instansiate(Method method) {
         try {
             String name = method.getName();
+            Bean annotation = method.getAnnotation(Bean.class);
+            if (annotation != null && annotation.name().length() > 0) {
+                name = annotation.name();
+            }
             Object obj = method.getDeclaringClass().newInstance();
             return new Pair<>(name, method.invoke(obj));
         } catch (Exception e) {
@@ -89,6 +94,11 @@ public class DIYStatic {
     }
 
     private static Object getObject(Map<String, Object> namedObjects, Field field) {
+        Named named = field.getAnnotation(Named.class);
+        if (named != null) {
+            return namedObjects.get(named.value());
+        }
+
         return namedObjects
                 .values()
                 .stream()
