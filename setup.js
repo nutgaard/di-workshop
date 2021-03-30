@@ -9,7 +9,7 @@ if (!accept.includes(arg)) {
     process.exit(1);
 }
 
-const dir = path.join(__dirname, 'src', 'test', 'java', 'no', 'utgdev', 'diy', arg);
+const dir = path.join(__dirname, 'src', 'test', 'kotlin', 'no', 'utgdev', 'diy', arg);
 console.log('dir', dir);
 
 fs.readdirSync(dir)
