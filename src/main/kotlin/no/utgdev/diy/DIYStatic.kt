@@ -3,6 +3,7 @@ package no.utgdev.diy
 import no.utgdev.diy.annotations.Bean
 import no.utgdev.diy.annotations.Import
 import no.utgdev.diy.annotations.Inject
+import no.utgdev.diy.annotations.Named
 import org.reflections.ReflectionUtils
 import org.reflections.ReflectionUtils.withAnnotation
 import org.reflections.Reflections
@@ -30,8 +31,14 @@ object DIYStatic {
     fun instansiate(beans: Set<Method>): Map<String, Any> {
         return beans
             .map { method ->
+                var name = method.name
+                val annotation: Bean? = method.getAnnotation(Bean::class.java)
+                if (annotation != null && annotation.name.isNotBlank()) {
+                    name = annotation.name
+                }
+
                 val classInstance = method.declaringClass.getDeclaredConstructor().newInstance()
-                method.name to method.invoke(classInstance)
+                name to method.invoke(classInstance)
             }
             .toMap()
     }
@@ -73,6 +80,11 @@ object DIYStatic {
     }
 
     private fun getObject(namedObjects: Map<String, Any?>, field: Field): Any? {
+        val named: Named? = field.getAnnotation(Named::class.java)
+        if (named != null) {
+            return namedObjects[named.value]
+        }
+
         return namedObjects
             .values
             .filterNotNull()
