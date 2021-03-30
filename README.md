@@ -8,7 +8,17 @@ F.eks `new Controller(new Service(new DAO()))`.
 Sånn kodensnutten ovenfor ser ut må alle som vil ha en ny `Controller` forholde seg til en `Service` og en `DAO`.  
 Disse må trossalt instansieres og sendes inn som parametere. 
 
-I en DI/IoC verden fjerner man behovet for å forholde seg til `Service` og `DAO` objektene ved å flytte ansvaret for å finne disse inn i `Controller`. 
+I en DI/IoC verden fjerner man behovet for å forholde seg til `Service` og `DAO` objektene ved å flytte ansvaret for å finne disse inn i `Controller`.
+
+## Java vs Kotlin
+
+Workshoppen var original skrevet for Bekks java-faggruppe, og "hovedbranchene" er derfor basert på java-kode.
+Om man ønsker å gjennomføre workshoppen i kotlin, så kan man ta utgangspunkt i kotlin-branchene. 
+Kotlin-branchene følger samme navnekonvensjon som java-branchene, men med `-kotlin` suffixet. 
+E.g ønsker man å titte på løsningsforslaget til "Del 2" kan man sjekke branchen `del2` for java-koden, 
+og `del2-kotlin` for kotlin-koden. 
+
+For å starte workshoppen med kotlin kjører man `git checkout master-kotlin` før man starter. 
 
 ## Hvordan gjør vi det?
 
