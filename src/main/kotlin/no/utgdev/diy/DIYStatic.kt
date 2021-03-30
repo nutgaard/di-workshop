@@ -63,6 +63,17 @@ object DIYStatic {
                 field.trySetAccessible()
                 field.set(cls, wantedValue)
             }
+
+        namedObjects
+            .values
+            .filterNotNull()
+            .forEach{ obj ->
+                ReflectionUtils.getMethods(obj.javaClass, withAnnotation(PostConstruct::class.java))
+                    .forEach { method ->
+                        method.trySetAccessible()
+                        method.invoke(obj)
+                    }
+            }
     }
 
     @JvmStatic
