@@ -1,14 +1,14 @@
 package no.utgdev.diy.ex1
 
-//REMOVE import no.utgdev.diy.annotations.Bean
+import no.utgdev.diy.annotations.Bean
 
 class Ex1Config2 {
-    //REMOVE @Bean
+    @Bean
     fun number(): Double {
         return 2.0
     }
 
-    //REMOVE @Bean
+    @Bean
     fun map(): Map<String, String> {
         return emptyMap()
     }

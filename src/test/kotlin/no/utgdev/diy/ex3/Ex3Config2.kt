@@ -1,14 +1,14 @@
 package no.utgdev.diy.ex3
 
-//REMOVE import no.utgdev.diy.annotations.Bean;
+import no.utgdev.diy.annotations.Bean;
 
 class Ex3Config2 {
-    //REMOVE @Bean
+    @Bean
     fun service(): Service {
         return Service()
     }
 
-    //REMOVE @Bean
+    @Bean
     fun worldDao(): WorldDao {
         return WorldDao()
     }
