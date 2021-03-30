@@ -1,9 +1,15 @@
 package no.utgdev.diy
 
+import java.lang.reflect.Method
+
 // TODO Oppgave 2
 class DIY {
+    private var instantiated: Boolean = false
+    private var beans: MutableSet<Method> = mutableSetOf()
+    private var objects: Map<String, Any> = mapOf()
+
     companion object {
-        private val instance: DIY? = null
+        private var instance: DIY? = null
 
         @JvmStatic
         fun getInstance(): DIY = getInstance(false)
@@ -15,22 +21,31 @@ class DIY {
 
         @JvmStatic
         fun getInstance(refresh: Boolean): DIY {
-            TODO("Not implemented yet")
+            if (instance == null || refresh) {
+                instance = DIY()
+            }
+            return requireNotNull(instance)
         }
 
         @JvmStatic
         fun load(classPath: String) {
-            TODO("Not implemented yet")
+            getInstance().beans.addAll(DIYStatic.scan(classPath))
         }
 
         @JvmStatic
         fun load(root: Class<*>) {
-            TODO("Not implemented yet")
+            getInstance().beans.addAll(DIYStatic.scan(root))
         }
 
         @JvmStatic
         fun getBean(name: String): Any? {
-            TODO("Not implemented yet")
+            val diy = getInstance()
+            if (!diy.instantiated) {
+                diy.objects = DIYStatic.instansiate(diy.beans)
+                DIYStatic.wireup(diy.objects)
+                diy.instantiated = true
+            }
+            return DIYStatic.getBean(diy.objects, name)
         }
     }
 }
