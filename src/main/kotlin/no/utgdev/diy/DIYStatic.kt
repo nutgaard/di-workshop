@@ -1,45 +1,50 @@
 package no.utgdev.diy
 
-import no.utgdev.diy.annotations.Bean
-import no.utgdev.diy.annotations.Import
-import no.utgdev.diy.annotations.Inject
-import no.utgdev.diy.annotations.Named
+import no.utgdev.diy.annotations.*
 import org.reflections.ReflectionUtils
 import org.reflections.ReflectionUtils.withAnnotation
 import org.reflections.Reflections
 import org.reflections.scanners.MethodAnnotationsScanner
+import org.reflections.scanners.Scanner
+import org.reflections.scanners.SubTypesScanner
+import org.reflections.scanners.TypeAnnotationsScanner
 import java.lang.reflect.Field
 import java.lang.reflect.Method
 import kotlin.reflect.KClass
 
 object DIYStatic {
+    private val scanners: Array<Scanner> = arrayOf(
+        MethodAnnotationsScanner(),
+        TypeAnnotationsScanner(),
+        SubTypesScanner()
+    )
+
     @JvmStatic
-    fun scan(classpath: String): Set<Method> {
-        val scanner = Reflections(classpath, MethodAnnotationsScanner())
-        return scanner.getMethodsAnnotatedWith(Bean::class.java)
+    fun scan(classpath: String): Set<BeanDefinition> {
+        val scanner = Reflections("no.utgdev.diy.annotations", classpath, *scanners)
+
+        val classes = scanner.getTypesAnnotatedWith(Component::class.java)
+            .filter { !it.isAnnotation }
+            .map { BeanDefinition.FromClass(it) }
+        val methods = scanner.getMethodsAnnotatedWith(Bean::class.java)
+            .map { BeanDefinition.FromMethod(it) }
+
+        return (classes + methods).toSet()
     }
 
     @JvmStatic
-    fun scan(root: Class<*>): Set<Method> {
+    fun scan(root: Class<*>): Set<BeanDefinition> {
         val collector = mutableSetOf<KClass<*>>()
         return recursiveScan(root.kotlin, collector)
             .flatMap(DIYStatic::load)
+            .map { BeanDefinition.FromMethod(it) }
             .toSet()
     }
 
     @JvmStatic
-    fun instansiate(beans: Set<Method>): Map<String, Any> {
+    fun instansiate(beans: Set<BeanDefinition>): Map<String, Any> {
         return beans
-            .map { method ->
-                var name = method.name
-                val annotation: Bean? = method.getAnnotation(Bean::class.java)
-                if (annotation != null && annotation.name.isNotBlank()) {
-                    name = annotation.name
-                }
-
-                val classInstance = method.declaringClass.getDeclaredConstructor().newInstance()
-                name to method.invoke(classInstance)
-            }
+            .map { bean -> bean.name to bean.value }
             .toMap()
     }
 

@@ -1,11 +1,11 @@
 package no.utgdev.diy.ex6
 
-//REMOVE import no.utgdev.diy.annotations.Component;
-//REMOVE import no.utgdev.diy.annotations.Inject;
+import no.utgdev.diy.annotations.Component;
+import no.utgdev.diy.annotations.Inject;
 
-//REMOVE @Component
+@Component
 class MinComponent {
-    //REMOVE @Inject
+    @Inject
     private val service: MinService? = null
     fun hei(): String {
         return "Hei fra MinComponent og " + service!!.hei()

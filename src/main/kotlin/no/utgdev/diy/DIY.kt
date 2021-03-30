@@ -1,11 +1,9 @@
 package no.utgdev.diy
 
-import java.lang.reflect.Method
-
 // TODO Oppgave 2
 class DIY {
     private var instantiated: Boolean = false
-    private var beans: MutableSet<Method> = mutableSetOf()
+    private var beans: MutableSet<BeanDefinition> = mutableSetOf()
     private var objects: Map<String, Any> = mapOf()
 
     companion object {

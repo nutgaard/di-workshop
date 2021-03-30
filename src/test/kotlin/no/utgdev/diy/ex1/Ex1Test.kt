@@ -1,5 +1,6 @@
 package no.utgdev.diy.ex1
 
+import no.utgdev.diy.BeanDefinition
 import no.utgdev.diy.DIYStatic.scan
 import org.junit.jupiter.api.Test
 import org.assertj.core.api.Assertions
@@ -22,10 +23,10 @@ internal class Ex1Test {
     }
 
     companion object {
-        private fun methodNames(methods: Set<Method>): List<String> {
+        private fun methodNames(methods: Set<BeanDefinition>): List<String> {
             return methods
                 .stream()
-                .map { obj: Method -> obj.name }
+                .map { obj -> obj.name }
                 .collect(Collectors.toList())
         }
     }
